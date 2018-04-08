@@ -1,7 +1,7 @@
 <?php
 namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\BaseController;
-use App\Models\User;
+use App\User;
 use Illuminate\Hashing\BcryptHasher;
 use Illuminate\Http\Request;
 use Tymon\JWTAuth\JWTAuth;
@@ -19,13 +19,16 @@ class AuthenticateController extends BaseController
     {
         $this->validate($request, [
             'name' => 'required',
-            'email' => 'required|email|max:255',
+            'phone' => 'required|email|max:255',
             'password' => 'required|string|min:4'
         ]);
+        $password =app('hash')->make(123456);
         $user = User::create([
-            'name' => $request->input('name'),
-            'email' => $request->input('email'),
-            'password' => (new BcryptHasher)->make($request->input('password')),
+          'name'=> $request->name,
+          'phone'=> $request->phone,
+          'password'=>$password,
+          'user_type' => $request->user_type,
+          'outlet_id' => $request->outlet_id,,
         ]);
         $token = $this->auth->fromUser($user);
         return response()->json(compact('token'));

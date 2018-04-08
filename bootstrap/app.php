@@ -26,7 +26,7 @@ $app = new Laravel\Lumen\Application(
 $app->withFacades();
 
 $app->withEloquent();
-
+$app->configure('filesystems');
 /*
 |--------------------------------------------------------------------------
 | Register Container Bindings
@@ -47,7 +47,9 @@ $app->singleton(
     Illuminate\Contracts\Console\Kernel::class,
     App\Console\Kernel::class
 );
-
+$app->singleton('filesystem', function ($app) {
+    return $app->loadComponent('filesystems', 'Illuminate\Filesystem\FilesystemServiceProvider', 'filesystem');
+});
 /*
 |--------------------------------------------------------------------------
 | Register Middleware
@@ -91,11 +93,12 @@ $app->register(Tymon\JWTAuth\Providers\LumenServiceProvider::class);
 $app->register(App\Providers\AuthServiceProvider::class);
 // $app->register(App\Providers\EventServiceProvider::class);
 
+
 // auth
 $app['Dingo\Api\Auth\Auth']->extend('jwt', function ($app) {
     return new Dingo\Api\Auth\Provider\JWT($app['Tymon\JWTAuth\JWTAuth']);
 });
-
+$app->register('Wn\Generators\CommandsServiceProvider');
 /*
 |--------------------------------------------------------------------------
 | Load The Application Routes

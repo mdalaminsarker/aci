@@ -1,8 +1,10 @@
 <?php
+
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
-class CreatePostsTable extends Migration
+
+class CreateSlotsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -11,18 +13,16 @@ class CreatePostsTable extends Migration
      */
     public function up()
     {
-        Schema::create('posts', function (Blueprint $table) {
+        Schema::create('slots', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('user_id');
-            $table->integer('cate_id');
-            $table->integer('read');
-            $table->string('name');
-            $table->string('title');
-            $table->string('content');
+            $table->string('slot_name');
+            $table->string('slot_time');
+            $table->time('slot_start');
+            $table->time('slot_end');
             $table->timestamps();
-            $table->softDeletes();
         });
     }
+
     /**
      * Reverse the migrations.
      *
@@ -30,6 +30,6 @@ class CreatePostsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('posts');
+        Schema::dropIfExists('slots');
     }
 }
