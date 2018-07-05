@@ -11,6 +11,7 @@ use Tymon\JWTAuth\Exceptions\JWTException;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Http\Exception\HttpResponseException;
 use App\User;
+use DB;
 class AuthController extends Controller
 {
     /**
@@ -45,6 +46,7 @@ class AuthController extends Controller
     }
     public function postLogin(Request $request)
     {
+
         try {
             $this->validate($request, [
                 'phone' => 'required|max:255',
@@ -67,6 +69,11 @@ class AuthController extends Controller
         }
 
         // All good so return the token
+        if ($request->has('outlet_id')) {
+          $outlet = $request->outlet_id;
+          DB::table('users')->where('phone', $request->phone)->update(['outlet_id' => $outlet]);
+        
+        }
         return $this->onAuthorized($token);
     }
 

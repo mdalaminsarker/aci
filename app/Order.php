@@ -23,7 +23,7 @@ class Order extends Model
         'availablity_status',
         'delivery_executive_id',
         'user_id',
-        'delivered_date',
+        'delivered_date_only',
         'delivery_time',
         'attachment',
         'de_remarks',

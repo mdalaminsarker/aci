@@ -45,8 +45,14 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api\V1'], function ($a
 
 $api->version(['v1', 'v2'], ['namespace' => 'App\Http\Controllers'], function ($api) {
     // test
-    $api->get('file/{filename}', 'APIController@viewFile');
+    //$api->get('file/{filename}', 'APIController@viewFile');
     $api->get('outlet', 'APIController@getOutlet');
+    $api->get('status/outlet', 'APIController@StatusByOutlet');
+    $api->get('status/slot', 'APIController@StatusBySlot');
+    $api->get('status/pending', 'APIController@PendingBytime');
+    $api->get('view/file/{name}','APIController@viewFile');
+    $api->get('slot', 'APIController@getSlot');
+    $api->get('ca', 'APIController@getCA');
     $api->group(['middleware' => 'api.auth'], function ($api) {
     //create an order
     $api->post('/order', 'APIController@storeOrder');
@@ -58,13 +64,15 @@ $api->version(['v1', 'v2'], ['namespace' => 'App\Http\Controllers'], function ($
     $api->delete('/delete/{id}', 'APIController@storeOrder');
 
     //uploading files
+
     $api->post('file','APIController@saveFile');
     $api->get('file','APIController@getFileList');
-    $api->get('filex','APIController@x');
+    //downloadFIle
+
 
     // get outlet and slot
 
-    $api->get('slot', 'APIController@getSlot');
+
 
     // update delivery
 

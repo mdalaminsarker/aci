@@ -36,6 +36,8 @@ class CreateOrdersTable extends Migration
             $table->integer('last_update_user_id')->nullable();
             $table->integer('edit_blocked')->nullable();
             $table->string('follow_up_pending')->nullable();
+            $table->string('longitude')->nullable();
+            $table->string('latitude')->nullable();
             $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
         });
